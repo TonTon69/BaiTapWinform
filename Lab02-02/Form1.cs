@@ -20,6 +20,7 @@ namespace Lab02_02
         private void Form1_Load(object sender, EventArgs e)
         {
             cmbFaculty.SelectedIndex = 0;
+            countGenger();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -35,16 +36,13 @@ namespace Lab02_02
                     selectedRow = dgvStudent.Rows.Add();
                     InsertUpdate(selectedRow);
                     MessageBox.Show("Thêm mới dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK);
-                    int count = countGenger();
-                    txtSumMale.Text = count.ToString();
-                    txtSumFemale.Text = (dgvStudent.Rows.Count - count).ToString();
                 }
                 else
                 {
                     InsertUpdate(selectedRow);
                     MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK);
-                    countGenger();
                 }
+                countGenger();
             }
             catch (Exception ex)
             {
@@ -89,11 +87,9 @@ namespace Lab02_02
                     {
                         dgvStudent.Rows.RemoveAt(selectedRow);
                         MessageBox.Show("Xóa sinh viên thành công!", "Thông báo", MessageBoxButtons.OK);
-                        int count = countGenger();
-                        txtSumMale.Text = count.ToString();
-                        txtSumFemale.Text = (dgvStudent.Rows.Count - count).ToString();
                     }
                 }
+                countGenger();
             }
             catch (Exception ex)
             {
@@ -118,18 +114,23 @@ namespace Lab02_02
             cmbFaculty.Text = dgvStudent.Rows[selectedRow].Cells[4].Value.ToString();
         }
         //2.5 Dem tong SV nam, nu
-        private int countGenger()
+        private void countGenger()
         {
-            int count = 0;
+            int countMale = 0, countFemale = 0;
             for (int i = 0; i < dgvStudent.Rows.Count; i++)
             {
                 if (dgvStudent.Rows[i].Cells[2].Value.ToString() == "Nam")
                 {
-                    count++;
+                    countMale++;
+                }
+                else
+                {
+                    countFemale++;
                 }
             }
-            return count;
+            this.txtSumMale.Text = countMale.ToString();
+            this.txtSumFemale.Text = countFemale.ToString();
         }
-      
+
     }
 }
