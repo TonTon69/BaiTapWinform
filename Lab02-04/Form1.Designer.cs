@@ -176,6 +176,7 @@ namespace Lab02_04
             this.lwAccount.TabIndex = 4;
             this.lwAccount.UseCompatibleStateImageBehavior = false;
             this.lwAccount.View = System.Windows.Forms.View.Details;
+            this.lwAccount.SelectedIndexChanged += new System.EventHandler(this.lwAccount_SelectedIndexChanged);
             // 
             // colSTT
             // 

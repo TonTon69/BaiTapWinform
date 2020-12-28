@@ -19,11 +19,15 @@ namespace Lab02_04
         private int KtTonTai(string maTK)//kiểm tra tài khoản có tồn tại hay chưa
         {
             for (int i = 0; i < lwAccount.Items.Count; i++)
+            {
                 if (lwAccount.Items[i].SubItems[1].Text == maTK)
+                {
                     return i;
+                }
+            }
             return -1;
         }
-       
+
         private int i = 0;
         private void btnUpdate_Click(object sender, EventArgs e)
         {
@@ -68,11 +72,12 @@ namespace Lab02_04
                 MessageBox.Show(ex.Message);
             }
         }
-      
+
         private void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
+                int sum = 0;
                 int selectedRow = KtTonTai(txtSTK.Text);
                 if (selectedRow == -1)
                 {
@@ -84,6 +89,11 @@ namespace Lab02_04
                     if (dr == DialogResult.Yes)
                     {
                         lwAccount.Items.RemoveAt(selectedRow);
+                        for (int i = 0; i < lwAccount.Items.Count; i++)
+                        {
+                            sum += int.Parse(lwAccount.Items[i].SubItems[4].Text);
+                        }
+                        txtTotal.Text = sum.ToString();
                         MessageBox.Show("Xóa tài khoản thành công!", "Thông báo", MessageBoxButtons.OK);
                     }
                 }
@@ -98,8 +108,19 @@ namespace Lab02_04
         {
             if (MessageBox.Show("Thoát chươnng trình?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                this.Close();   
+                this.Close();
             }
+        }
+
+        private void lwAccount_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lwAccount.SelectedItems.Count == 0)
+                return;
+            ListViewItem item = lwAccount.SelectedItems[0];
+            txtSTK.Text = item.SubItems[1].Text;
+            txtTenKH.Text = item.SubItems[2].Text;
+            txtDiaChiKH.Text = item.SubItems[3].Text;
+            txtSoTienTrongTK.Text = item.SubItems[4].Text;
         }
     }
 }
